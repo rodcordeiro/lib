@@ -11,7 +11,6 @@
     "format": "npm run lint && npm run pretty",
     "lint": "eslint --fix --ignore-path .eslintignore --fix --ext .ts,.tsx,.js,.jsx .",
     "pretty": "prettier --ignore-path .eslintignore --write .",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Rodrigo Cordeiro <rodrigomendoncca@gmail.com> (https://rodcordeiro.com.br/)",
