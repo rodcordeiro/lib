@@ -37,11 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Release
-        uses: 'marvinpinto/action-automatic-releases@latest'
+        uses: fdiesel/github-action-node-release@version
         with:
-          repo_token: '${{ secrets.GITHUB_TOKEN }}'
-          automatic_release_tag: 'latest'
-          prerelease: false
-          title: 'Latest'
-          files: |
-            **/*
+          token: ${{ secrets.GITHUB_TOKEN }}
+          prefix: v # (optional) default none
