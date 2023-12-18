@@ -1,0 +1,8 @@
+__tests__
+node_modules
+.github
+assets
+
+**/*.js
+node_modules
+lib
