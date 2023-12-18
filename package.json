@@ -1,9 +1,10 @@
 {
   "name": "@rodcordeiro/lib",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index",
+  "type": "module",
   "scripts": {
     "start": "src/index.js",
     "start:dev": "tsx watch src/index.ts",
@@ -15,10 +16,8 @@
   "keywords": [],
   "author": "Rodrigo Cordeiro <rodrigomendoncca@gmail.com> (https://rodcordeiro.com.br/)",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh.github.com/rodcordeiro/lib"
-  },
+  "repository": "rodcordeiro/lib",
+  "homepage": "https://github.com/rodcordeiro/lib",
   "devDependencies": {
     "@types/node": "^20.10.5",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
@@ -31,5 +30,8 @@
   "files": [
     "lib/**/*"
   ],
-  "private": false
+  "private": false,
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
