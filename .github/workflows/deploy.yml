@@ -16,8 +16,7 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm test --if-present
-
-   publish-npm:
+  publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
