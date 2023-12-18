@@ -1,6 +1,6 @@
 {
   "name": "@rodcordeiro/lib",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index",
@@ -8,7 +8,9 @@
   "scripts": {
     "start": "src/index.js",
     "start:dev": "tsx watch src/index.ts",
+    "prebuild": "npm run format",
     "build": "tsc",
+    "test": "jest --colors -u",
     "format": "npm run lint && npm run pretty",
     "lint": "eslint --fix --ignore-path .eslintignore --fix --ext .ts,.tsx,.js,.jsx .",
     "pretty": "prettier --ignore-path .eslintignore --write ."
@@ -19,13 +21,33 @@
   "repository": "rodcordeiro/lib",
   "homepage": "https://github.com/rodcordeiro/lib",
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.11",
     "@types/node": "^20.10.5",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.32.0",
+    "jest": "^29.7.0",
     "prettier": "^3.0.0",
+    "ts-jest": "^29.1.1",
     "tsx": "^4.6.2",
     "typescript": "^5.3.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "**/*.{js,ts}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!lib/**",
+      "!*.{j,t}s"
+    ],
+    "testMatch": [
+      "**/*/?(*.)+(spec|test).[jt]s?(x)"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "__tests__/__coverage__"
   },
   "files": [
     "lib/**/*"

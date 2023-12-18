@@ -4,5 +4,6 @@ import * as DateUtils from './dates';
 import * as PromiseUtils from './promises';
 // import * as StreamUtils from './stream';
 import * as StringUtils from './string';
+import * as ColorUtils from './colors';
 
-export { StringUtils, PromiseUtils, DateUtils, ArrayUtils };
+export { StringUtils, PromiseUtils, DateUtils, ArrayUtils, ColorUtils };

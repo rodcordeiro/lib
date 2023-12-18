@@ -1,3 +1,9 @@
-import { StringUtils, PromiseUtils, DateUtils, ArrayUtils } from './functions';
+import {
+  StringUtils,
+  PromiseUtils,
+  DateUtils,
+  ArrayUtils,
+  ColorUtils,
+} from './functions';
 
-export { StringUtils, PromiseUtils, DateUtils, ArrayUtils };
+export { StringUtils, PromiseUtils, DateUtils, ArrayUtils, ColorUtils };
