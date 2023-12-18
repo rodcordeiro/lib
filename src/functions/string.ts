@@ -58,7 +58,7 @@ export const UnderscoreToCamelCase = (str: string) =>
 export const Capitalize = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
-export const IsNotEmpty = (str: string) => {
+export const IsNotEmpty = (str: string | undefined | null): boolean => {
   if (str === undefined) return false;
   if (str === null) return false;
   if (str === 'undefined') return false;
