@@ -31,13 +31,13 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-  release:
-    name: Github Release
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Release
-        uses: fdiesel/github-action-node-release@v4.1.5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          prefix: v # (optional) default none
+  # release:
+  #   name: Github Release
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Release
+  #       uses: fdiesel/github-action-node-release@v4.1.5
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         prefix: v # (optional) default none
