@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Release
-        uses: fdiesel/github-action-node-release@latest
+        uses: fdiesel/github-action-node-release@v4.1.5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           prefix: v # (optional) default none
