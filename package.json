@@ -1,6 +1,6 @@
 {
   "name": "@rodcordeiro/lib",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index",
@@ -8,6 +8,7 @@
   "scripts": {
     "start": "src/index.js",
     "start:dev": "tsx watch src/index.ts",
+    "prebuild": "npm run format",
     "build": "tsc",
     "format": "npm run lint && npm run pretty",
     "lint": "eslint --fix --ignore-path .eslintignore --fix --ext .ts,.tsx,.js,.jsx .",
