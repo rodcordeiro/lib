@@ -8,6 +8,7 @@ on:
     branches: ['main']
 jobs:
   build:
+    name: Build lib
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,6 +18,7 @@ jobs:
       - run: npm ci
       - run: npm test --if-present
   publish-npm:
+    name: NPM Release
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -30,13 +32,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
   release:
-    name: Release
+    name: Github Release
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Release
-        uses: fnkr/github-action-ghr@v1
-        env:
-          GHR_COMPRESS: xz
-          GHR_PATH: build/
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: 'marvinpinto/action-automatic-releases@latest'
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: 'latest'
+          prerelease: false
+          title: 'Latest'
+          files: |
+            **/*
