@@ -10,7 +10,7 @@
     "build": "tsc",
     "format": "npm run lint && npm run pretty",
     "lint": "eslint --fix --ignore-path .eslintignore --fix --ext .ts,.tsx,.js,.jsx .",
-    "pretty": "prettier --ignore-path .eslintignore --write .",
+    "pretty": "prettier --ignore-path .eslintignore --write ."
   },
   "keywords": [],
   "author": "Rodrigo Cordeiro <rodrigomendoncca@gmail.com> (https://rodcordeiro.com.br/)",
