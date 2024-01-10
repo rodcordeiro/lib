@@ -26,24 +26,44 @@ export function minimizer(
   );
 }
 
-function createBatch<T>(data: T[], batchLength: number) {
-  const batch: [T[]] = [] as unknown as [T[]];
-  let arr: T[] = [];
-  data.map((item, index) => {
-    if (arr.length === batchLength) {
-      batch.push(arr);
-      arr = [];
-    }
-    if (index === data.length - 1) {
-      arr.push(item);
-      batch.push(arr);
-      return;
-    }
-
-    arr.push(item);
+export function groupByFields<T>(
+  array: Array<T>,
+  f: (item: T) => Array<any>,
+): Array<T[]> {
+  /*
+    params description :
+        f : function which returnf the array of fields 
+        e.g. :  (item) => {
+            return [itemField1, itemField2];
+        }
+        array : array of data to group e.g. : [{...}, {...}]       
+    */
+  var groups: { [key: string]: T[] } = {};
+  array.forEach((o) => {
+    var group = JSON.stringify(f(o));
+    groups[group] = groups[group] || [];
+    groups[group].push(o);
   });
-  return batch;
+
+  return Object.keys(groups).map((group) => {
+    return groups[group];
+  });
 }
+
+/**
+ * split array into chunks
+ * @param array - array to split
+ * @param chunkSize - chunk size
+ * @returns
+ */
+function splitArray<T>(array: Array<T>, chunkSize: number) {
+  const chunks = Array(Math.ceil(array.length / chunkSize))
+    .fill(1)
+    .map((_, index) => index * chunkSize)
+    .map((begin) => array.slice(begin, begin + chunkSize));
+  return chunks;
+}
+
 export async function asyncBatchProcess<T = unknown>(
   data: T[],
   cb: (batch: T[]) => Promise<void>,
@@ -51,8 +71,8 @@ export async function asyncBatchProcess<T = unknown>(
   filter?: (item: T, index?: number, array?: Array<T>) => boolean,
 ) {
   const batchData = filter
-    ? createBatch(data.filter(filter), batchLength)
-    : createBatch(data, batchLength);
+    ? splitArray(data.filter(filter), batchLength)
+    : splitArray(data, batchLength);
   // eslint-disable-next-line no-restricted-syntax
   for await (const batch of batchData) {
     await cb(batch);
@@ -65,8 +85,8 @@ export function batchProcess<T = unknown>(
   filter?: (item: T, index?: number, array?: Array<T>) => boolean,
 ) {
   const batchData = filter
-    ? createBatch(data.filter(filter), batchLength)
-    : createBatch(data, batchLength);
+    ? splitArray(data.filter(filter), batchLength)
+    : splitArray(data, batchLength);
   // eslint-disable-next-line no-restricted-syntax
   for (const batch of batchData) {
     cb(batch);
