@@ -31,6 +31,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm config set _authToken=${{secrets.npm_token}}
+      - run: npm config fix
       - run: npm publish
   # release:
   #   name: Github Release
