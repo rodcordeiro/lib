@@ -111,6 +111,11 @@ describe('DateUtils', () => {
   });
 
   describe('AddHour', () => {
+    it('should throw for invalid input', () => {
+      expect(() => DateUtils.AddHour(undefined as any, 0)).toThrow(
+        'InvalidDate',
+      );
+    });
     it('should correctly add hours to a date', () => {
       const date = new Date('2023-01-01T00:00:00Z');
       const result = DateUtils.AddHour(date, 5);
