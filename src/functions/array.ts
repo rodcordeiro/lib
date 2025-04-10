@@ -94,7 +94,7 @@ export function batchProcess<T = unknown>(
 }
 export function process<T = unknown>(
   data: T[],
-  cb: (batch: T) => void,
+  cb: (batch: T) => T | void,
   filter?: (item: T, index?: number, array?: Array<T>) => boolean,
 ) {
   const array = filter ? data.filter(filter) : data;
@@ -105,7 +105,7 @@ export function process<T = unknown>(
 }
 export async function asyncProcess<T = unknown>(
   data: T[],
-  cb: (batch: T) => Promise<void>,
+  cb: (batch: T) => Promise<T | void>,
   filter?: (item: T, index?: number, array?: Array<T>) => boolean,
 ) {
   const array = filter ? data.filter(filter) : data;
