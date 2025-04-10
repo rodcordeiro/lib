@@ -49,7 +49,9 @@ export function convertDate(d: any) {
   if (d.constructor === String) return new Date(String(d));
   if (typeof d === 'object') return new Date(d.year, d.month, d.date);
 
-  return NaN;
+  throw new Error(
+    'Parameter is not a number or could not be converted to date',
+  );
 }
 
 type DateCompare = string | Date | number | DateOptions;
