@@ -1,6 +1,6 @@
 {
   "name": "@rodcordeiro/lib",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index",
@@ -18,7 +18,10 @@
   "keywords": [],
   "author": "Rodrigo Cordeiro <rodrigomendoncca@gmail.com> (https://rodcordeiro.com.br/)",
   "license": "MIT",
-  "repository": "rodcordeiro/lib",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodcordeiro/lib.git"
+  },
   "homepage": "https://github.com/rodcordeiro/lib",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
