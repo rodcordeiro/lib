@@ -50,14 +50,15 @@ describe('DateUtils', () => {
     });
 
     it('should handle object with year/month/date', () => {
-      const obj = { year: 2022, month: 11, date: 25 };
+      const obj = { year: 2022, month: 11, day: 25 };
       const result = DateUtils.convertDate(obj);
       expect(result.toISOString().startsWith('2022-12-25')).toBe(true);
     });
 
-    it('should return NaN for invalid input', () => {
-      const result = DateUtils.convertDate(undefined as any);
-      expect(Number.isNaN(result as any)).toBe(true);
+    it('should throws for invalid input', () => {
+      expect(DateUtils.convertDate(undefined as any)).toThrowError(
+        'Parameter is not a valid date input or could not be converted',
+      );
     });
   });
 
@@ -113,14 +114,14 @@ describe('DateUtils', () => {
     it('should correctly add hours to a date', () => {
       const date = new Date('2023-01-01T00:00:00Z');
       const result = DateUtils.AddHour(date, 5);
-      const expected = new Date('2023-01-01T05:00:00Z').getTime();
+      const expected = new Date('2023-01-01T05:00:00Z');
       expect(result).toBe(expected);
     });
 
     it('should work with negative hours', () => {
       const date = new Date('2023-01-01T12:00:00Z');
       const result = DateUtils.AddHour(date, -2);
-      const expected = new Date('2023-01-01T10:00:00Z').getTime();
+      const expected = new Date('2023-01-01T10:00:00Z');
       expect(result).toBe(expected);
     });
   });
