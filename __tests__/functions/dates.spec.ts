@@ -55,8 +55,8 @@ describe('DateUtils', () => {
       expect(result.toISOString().startsWith('2022-12-25')).toBe(true);
     });
 
-    it('should throws for invalid input', () => {
-      expect(DateUtils.convertDate(undefined as any)).toThrowError(
+    it('should throw for invalid input', () => {
+      expect(() => DateUtils.convertDate(undefined as any)).toThrow(
         'Parameter is not a valid date input or could not be converted',
       );
     });
@@ -115,14 +115,14 @@ describe('DateUtils', () => {
       const date = new Date('2023-01-01T00:00:00Z');
       const result = DateUtils.AddHour(date, 5);
       const expected = new Date('2023-01-01T05:00:00Z');
-      expect(result).toBe(expected);
+      expect(result).toEqual(expected);
     });
 
     it('should work with negative hours', () => {
       const date = new Date('2023-01-01T12:00:00Z');
       const result = DateUtils.AddHour(date, -2);
       const expected = new Date('2023-01-01T10:00:00Z');
-      expect(result).toBe(expected);
+      expect(result).toEqual(expected);
     });
   });
 });

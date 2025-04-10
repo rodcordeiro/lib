@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect, jest } from '@jest/globals';
 
 import { PromiseUtils } from '../../src';
 
@@ -44,11 +44,11 @@ describe('PromiseUtils', () => {
     it('should retry the specified number of times if it fails', async () => {
       const factory = jest
         .fn()
-        .mockRejectedValueOnce(new Error('fail 1'))
-        .mockRejectedValueOnce(new Error('fail 2'))
-        .mockResolvedValue('eventually works');
+        .mockRejectedValueOnce(new Error('fail 1') as never)
+        .mockRejectedValueOnce(new Error('fail 2') as never)
+        .mockResolvedValue('eventually works' as never);
 
-      const result = await PromiseUtils.retry(factory, 3);
+      const result = await PromiseUtils.retry(factory as any, 3);
       expect(result).toBe('eventually works');
       expect(factory).toHaveBeenCalledTimes(3);
     });
