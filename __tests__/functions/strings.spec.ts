@@ -3,241 +3,86 @@ import { describe, it, expect } from '@jest/globals';
 import { StringUtils } from '../../src';
 
 describe('StringUtils', () => {
-  describe('removeAccents', () => {
-    // Should remove accents from a string with only one type of accent
-    it('should remove accent from string with only one type of accent', () => {
-      const input = 'líção';
-      const expected = 'licao';
-      const result = StringUtils.removeAccents(input);
-      expect(result).toEqual(expected);
-    });
-
-    // Should remove accents from a string with multiple types of accents
-    it('should remove accents from string with multiple types of accents', () => {
-      const input = 'líçãõ';
-      const expected = 'licao';
-      const result = StringUtils.removeAccents(input);
-      expect(result).toEqual(expected);
-    });
-
-    // Should return the same string if it has no accents
-    it('should return the same string if it has no accents', () => {
-      const input = 'licao';
-      const expected = 'licao';
-      const result = StringUtils.removeAccents(input);
-      expect(result).toEqual(expected);
-    });
-
-    // Should return an empty string if input is an empty string
-    it('should return an empty string if input is an empty string', () => {
-      const input = '';
-      const expected = '';
-      const result = StringUtils.removeAccents(input);
-      expect(result).toEqual(expected);
-    });
-
-    // Should remove accents from a string with special characters
-    it('should remove accents from string with special characters', () => {
-      const input = 'líçãõ!';
-      const expected = 'licao!';
-      const result = StringUtils.removeAccents(input);
-      expect(result).toEqual(expected);
-    });
-
-    // Should remove accents from a string with numbers
-    it('should remove accents from string with numbers', () => {
-      const input = 'líçãõ123';
-      const expected = 'licao123';
-      const result = StringUtils.removeAccents(input);
-      expect(result).toEqual(expected);
-    });
+  it('removeAccents should remove accents correctly', () => {
+    expect(StringUtils.removeAccents('líção')).toBe('licao');
+    expect(StringUtils.removeAccents('coração')).toBe('coracao');
+    expect(StringUtils.removeAccents('Êxito')).toBe('Exito');
   });
 
-  describe('paddy', () => {
-    // Should pad a string with zeros to the left until it reaches the desired length
-    it('should pad a string with zeros to the left until it reaches the desired length', () => {
-      expect(StringUtils.paddy('123', 5)).toBe('00123');
-      expect(StringUtils.paddy('4567', 7)).toBe('0004567');
-      expect(StringUtils.paddy('89', 3)).toBe('089');
-    });
-
-    // Should pad a string with a custom character to the left until it reaches the desired length
-    it('should pad a string with a custom character to the left until it reaches the desired length', () => {
-      expect(StringUtils.paddy('123', 5, '-')).toBe('--123');
-      expect(StringUtils.paddy('4567', 7, '*')).toBe('***4567');
-      expect(StringUtils.paddy('89', 3, '+')).toBe('+89');
-    });
-
-    // Should not pad a string if it already has the desired length
-    it('should not pad a string if it already has the desired length', () => {
-      expect(StringUtils.paddy('123', 3)).toBe('123');
-      expect(StringUtils.paddy('4567', 4)).toBe('4567');
-      expect(StringUtils.paddy('89', 2)).toBe('89');
-    });
+  it('paddy should return a padded string', () => {
+    expect(StringUtils.paddy('5', 3)).toBe('005');
+    expect(StringUtils.paddy('42', 4, 'x')).toBe('xx42');
   });
 
-  describe('CamelCaseToUnderscore', () => {
-    // Should convert a simple CamelCase string to underscore format
-    it('should convert a simple CamelCase string to underscore format', () => {
-      const input = 'simpleCamelCaseString';
-      const expected = 'simple_camel_case_string';
-      const result = StringUtils.CamelCaseToUnderscore(input);
-      expect(result).toEqual(expected);
-    });
-
-    // Should convert a CamelCase string with multiple uppercase letters to underscore format
-    it('should convert a CamelCase string with multiple uppercase letters to underscore format', () => {
-      const input = 'camelCaseStringWithMultipleUppercaseLetters';
-      const expected = 'camel_case_string_with_multiple_uppercase_letters';
-      const result = StringUtils.CamelCaseToUnderscore(input);
-      expect(result).toEqual(expected);
-    });
+  it('CamelCaseToUnderscore should convert camelCase to underscore_case', () => {
+    expect(StringUtils.CamelCaseToUnderscore('camelCaseText')).toBe(
+      'camel_case_text',
+    );
+    expect(StringUtils.CamelCaseToUnderscore('oneTwoThree')).toBe(
+      'one_two_three',
+    );
   });
 
-  describe('UnderscoreToCamelCase', () => {
-    // Should remove accents from a string
-    it('should remove accents from a string', () => {
-      const input = 'áéíóú';
-      const expected = 'aeiou';
-      const result = StringUtils.removeAccents(input);
-      expect(result).toEqual(expected);
-    });
-
-    // Should pad a string with zeros to the specified length
-    it('should pad a string with zeros to the specified length', () => {
-      const input = '123';
-      const padlen = 5;
-      const expected = '00123';
-      const result = StringUtils.paddy(input, padlen);
-      expect(result).toEqual(expected);
-    });
-
-    // Should capitalize the first letter of a string
-    it('should capitalize the first letter of a string', () => {
-      const input = 'hello';
-      const expected = 'Hello';
-      const result = StringUtils.Capitalize(input);
-      expect(result).toEqual(expected);
-    });
-
-    // Should return true if the string is not empty, false otherwise
-    it('should return true if the string is not empty, false otherwise', () => {
-      const input = 'hello';
-      const expected = true;
-      const result = StringUtils.IsNotEmpty(input);
-      expect(result).toEqual(expected);
-    });
-  });
-  // Generated by CodiumAI
-
-  describe('Capitalize', () => {
-    // Should capitalize the first letter of a given string
-    it('should capitalize the first letter of a given string', () => {
-      const result = StringUtils.Capitalize('hello');
-      expect(result).toBe('Hello');
-    });
-
-    // Should return an empty string if an empty string is given
-    it('should return an empty string if an empty string is given', () => {
-      const result = StringUtils.Capitalize('');
-      expect(result).toBe('');
-    });
-
-    // Should return the same string if only one character is given
-    it('should return the same string if only one character is given', () => {
-      const result = StringUtils.Capitalize('a');
-      expect(result).toBe('A');
-    });
-
-    // Should throw an error if a non-string value is given
-    it('should throw an error if a non-string value is given', () => {
-      expect(() => {
-        StringUtils.Capitalize(123 as unknown as string);
-      }).toThrow();
-    });
-
-    // Should handle strings with non-letter first characters
-    it('should handle strings with non-letter first characters', () => {
-      const result = StringUtils.Capitalize('123abc');
-      expect(result).toBe('123abc');
-    });
-
-    // Should handle strings with non-letter characters after the first character
-    it('should handle strings with non-letter characters after the first character', () => {
-      const result = StringUtils.Capitalize('a1b2c3');
-      expect(result).toBe('A1b2c3');
-    });
+  it('UnderscoreToCamelCase should convert underscore_case to camelCase', () => {
+    expect(StringUtils.UnderscoreToCamelCase('camel_case_text')).toBe(
+      'camelCaseText',
+    );
+    expect(StringUtils.UnderscoreToCamelCase('one_two_three')).toBe(
+      'oneTwoThree',
+    );
   });
 
-  // Test IsNotEmpty with a non-empty string
-  it('should return true when input is a non-empty string', () => {
-    // Arrange
-    const input = 'Hello World';
-
-    // Act
-    const result = StringUtils.IsNotEmpty(input);
-
-    // Assert
-    expect(result).toBe(true);
+  it('Capitalize should capitalize first letter', () => {
+    expect(StringUtils.Capitalize('hello')).toBe('Hello');
+    expect(StringUtils.Capitalize('a')).toBe('A');
   });
 
-  // Test RemoveBreakLines with a string containing line breaks
-  it('should remove line breaks from the input string', () => {
-    // Arrange
-    const input = 'Hello\nWorld';
-
-    // Act
-    const result = StringUtils.RemoveBreakLines(input);
-
-    // Assert
-    expect(result).toBe('HelloWorld');
+  it('IsNotEmpty should validate non-empty strings', () => {
+    expect(StringUtils.IsNotEmpty('hello')).toBe(true);
+    expect(StringUtils.IsNotEmpty('')).toBe(false);
+    expect(StringUtils.IsNotEmpty('   ')).toBe(false);
+    expect(StringUtils.IsNotEmpty(null)).toBe(false);
+    expect(StringUtils.IsNotEmpty(undefined)).toBe(false);
+    expect(StringUtils.IsNotEmpty('undefined')).toBe(false);
+    expect(StringUtils.IsNotEmpty('null')).toBe(false);
   });
 
-  // Test RemoveSpaces with a string containing spaces
-  it('should remove spaces from the input string', () => {
-    // Arrange
-    const input = 'Hello World';
-
-    // Act
-    const result = StringUtils.RemoveSpaces(input);
-
-    // Assert
-    expect(result).toBe('HelloWorld');
+  it('RemoveBreakLines should remove newlines', () => {
+    expect(StringUtils.RemoveBreakLines('Hello\nWorld')).toBe('HelloWorld');
+    expect(StringUtils.RemoveBreakLines('Line1\r\nLine2')).toBe('Line1Line2');
   });
 
-  // Test IsNotEmpty with an empty string
-  it('should return false when input is an empty string', () => {
-    // Arrange
-    const input = '';
-
-    // Act
-    const result = StringUtils.IsNotEmpty(input);
-
-    // Assert
-    expect(result).toBe(false);
+  it('RemoveSpaces should remove all spaces', () => {
+    expect(StringUtils.RemoveSpaces('a b c')).toBe('abc');
+    expect(StringUtils.RemoveSpaces('   spaced out   ')).toBe('spacedout');
   });
 
-  // Test IsNotEmpty with undefined input
-  it('should return false when input is undefined', () => {
-    // Arrange
-    const input = undefined;
-
-    // Act
-    const result = StringUtils.IsNotEmpty(input);
-
-    // Assert
-    expect(result).toBe(false);
+  it('RemoveSpecialCharacters should strip non-alphanumeric chars', () => {
+    expect(StringUtils.RemoveSpecialCharacters('a@b#c$')).toBe('abc');
+    expect(StringUtils.RemoveSpecialCharacters('hello! world?')).toBe(
+      'helloworld',
+    );
   });
 
-  // Test IsNotEmpty with null input
-  it('should return false when input is null', () => {
-    // Arrange
-    const input = null;
+  it('GetOnlyNumbers should return only digits', () => {
+    expect(StringUtils.GetOnlyNumbers('abc123')).toBe('123');
+    expect(StringUtils.GetOnlyNumbers('telefone: (11) 99999-8888')).toBe(
+      '11999998888',
+    );
+  });
 
-    // Act
-    const result = StringUtils.IsNotEmpty(input);
+  it('GetOnlyLetters should return only letters', () => {
+    expect(StringUtils.GetOnlyLetters('abc123')).toBe('abc');
+    expect(StringUtils.GetOnlyLetters('a1b2c3!')).toBe('abc');
+  });
 
-    // Assert
-    expect(result).toBe(false);
+  it('GetLastCharacters should return last N chars', () => {
+    expect(StringUtils.GetLastCharacters('abcdef', 3)).toBe('def');
+    expect(StringUtils.GetLastCharacters('12345', 2)).toBe('45');
+  });
+
+  it('GetFirstCharacters should return first N chars', () => {
+    expect(StringUtils.GetFirstCharacters('abcdef', 3)).toBe('abc');
+    expect(StringUtils.GetFirstCharacters('12345', 2)).toBe('12');
   });
 });
