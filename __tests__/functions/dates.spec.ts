@@ -113,7 +113,7 @@ describe('DateUtils', () => {
   describe('AddHour', () => {
     it('should throw for invalid input', () => {
       expect(() => DateUtils.AddHour(undefined as any, 0)).toThrow(
-        'InvalidDate',
+        'Invalid Date',
       );
     });
     it('should correctly add hours to a date', () => {
