@@ -1,4 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
+
 import { PromiseUtils } from '../../src';
 
 describe('PromiseUtils', () => {

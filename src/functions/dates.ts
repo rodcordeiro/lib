@@ -3,15 +3,11 @@
  *  @param {string} value Recebe um valor ISO
  *  @example formatDate('2010-10-01T00:00:00Z') => '01/10/2010'
  */
-
-export const formatDate = (value: string): string =>
-  new Date(value)
-    .toISOString()
-    .split('T')[0]
-    .split('-')
-    .slice(0, 3)
-    .reverse()
-    .join('/');
+export const formatDate = (value: string): string => {
+  const date = new Date(value);
+  if (isNaN(date.getTime())) return '';
+  return date.toISOString().split('T')[0].split('-').reverse().join('/');
+};
 
 /**
  *  Função para adicionar x dias a data e retorná-lano formato Date
@@ -42,15 +38,23 @@ interface DateOptions {
  *   an object     : Interpreted as an object with year, month and date
  *                   attributes.  **NOTE** month is 0-11.
  */
-export function convertDate(d: any) {
-  if (d.constructor === Date) return d;
-  if (d.constructor === Array) return new Date(d[0], d[1], d[2]);
-  if (d.constructor === Number) return new Date(+d);
-  if (d.constructor === String) return new Date(String(d));
-  if (typeof d === 'object') return new Date(d.year, d.month, d.date);
+export function convertDate(d: any): Date {
+  if (d instanceof Date) return d;
+  if (Array.isArray(d)) return new Date(d[0], d[1], d[2]);
+  if (typeof d === 'number') return new Date(d);
+  if (typeof d === 'string') return new Date(d);
+  if (
+    typeof d === 'object' &&
+    d !== null &&
+    'year' in d &&
+    'month' in d &&
+    'day' in d
+  ) {
+    return new Date(d.year, d.month, d.day);
+  }
 
   throw new Error(
-    'Parameter is not a number or could not be converted to date',
+    'Parameter is not a valid date input or could not be converted',
   );
 }
 
@@ -108,6 +112,25 @@ export function isInRange(
     : NaN;
 }
 
-export function AddHour(date: Date, hour: number) {
-  return date.setHours(date.getHours() + hour);
+/**
+ * Adiciona uma quantidade de horas a uma data e retorna um novo objeto Date.
+ *
+ * @param {Date} date - A data base para adicionar as horas.
+ * @param {number} hour - O número de horas a serem adicionadas.
+ * @returns {Date} Uma nova instância de Date com as horas adicionadas.
+ *
+ * @throws {Error} Lança um erro se a data fornecida for inválida.
+ *
+ * @example
+ * const baseDate = new Date('2023-01-01T00:00:00Z');
+ * const newDate = AddHour(baseDate, 3);
+ * console.log(newDate.toISOString()); // '2023-01-01T03:00:00.000Z'
+ */
+export function AddHour(date: Date, hour: number): Date {
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    throw new Error('Invalid Date');
+  }
+  const clone = new Date(date);
+  clone.setHours(clone.getHours() + hour);
+  return clone;
 }
