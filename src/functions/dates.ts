@@ -24,7 +24,7 @@ export function addDays(date: string | Date, days: number): Date {
   return result;
 }
 
-interface iDateOptions {
+interface DateOptions {
   year: number;
   month: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
   day: number;
@@ -34,81 +34,78 @@ interface iDateOptions {
  * Converts the date in d to a date-object. The input can be:
  *
  *   a date object: returned without modification
- *
  *   an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
- *
  *   a number     : Interpreted as number of milliseconds
  *                   since 1 Jan 1970 (a timestamp)
- *
  *   a string     : Any format supported by the javascript engine, like
  *                   "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
- *
  *   an object     : Interpreted as an object with year, month and date
  *                   attributes.  **NOTE** month is 0-11.
  */
 export function convertDate(d: any) {
-  return d.constructor === Date
-    ? d
-    : d.constructor === Array
-      ? new Date(d[0], d[1], d[2])
-      : d.constructor === Number
-        ? // @ts-ignore
-          new Date(d)
-        : d.constructor === String
-          ? // @ts-ignore
-            new Date(d)
-          : typeof d === 'object'
-            ? new Date(d.year, d.month, d.date)
-            : NaN;
+  if (d.constructor === Date) return d;
+  if (d.constructor === Array) return new Date(d[0], d[1], d[2]);
+  if (d.constructor === Number) return new Date(+d);
+  if (d.constructor === String) return new Date(String(d));
+  if (typeof d === 'object') return new Date(d.year, d.month, d.date);
+
+  return NaN;
 }
+
+type DateCompare = string | Date | number | DateOptions;
 
 /**
 Compare two dates (could be of any type supported by the convert
 function above) and returns:
 
- _-1_ : if a < b
+  _-1_ : if a < b
 
-   _0_ : if a = b
+    _0_ : if a = b
 
-   _1_ : if a > b
+    _1_ : if a > b
 
-NaN : if a or b is an illegal date
+ NaN : if a or b is an illegal date
 
-NOTE: The code inside isFinite does an assignment (=).
-*/
-export function compareDates(
-  a: string | Date | number | iDateOptions,
-  b: string | Date | number | iDateOptions,
+ NOTE: The code inside isFinite does an assignment (=).
+ */
+export function compareDates(a: DateCompare, b: DateCompare): number {
+  const firstDate = convertDate(a).valueOf();
+  const secondDate = convertDate(b).valueOf();
+
+  if (!Number.isFinite(firstDate) || !Number.isFinite(secondDate)) {
+    return NaN;
+  }
+
+  return firstDate > secondDate ? 1 : firstDate < secondDate ? -1 : 0;
+}
+/**
+Checks if date in d is between dates in start and end.
+ Returns a boolean or NaN:
+  
+   true  : if d is between start and end (inclusive)
+  
+      false : if d is before start or after end
+  
+      NaN   : if one or more of the dates is illegal.
+  
+      __NOTE__ : The code inside isFinite does an assignment (=).
+ */
+
+export function isInRange(
+  d: DateCompare,
+  start: DateCompare,
+  end: DateCompare,
 ) {
-  // eslint-disable-next-line no-return-assign
-  return Number.isFinite((a = convertDate(a).valueOf())) &&
-    Number.isFinite((b = convertDate(b).valueOf()))
-    ? // @ts-ignore
-      (a > b) - (a < b)
+  const date = convertDate(d).valueOf();
+  const startDate = convertDate(start).valueOf();
+  const endDate = convertDate(end).valueOf();
+  return Number.isFinite(date) &&
+    Number.isFinite(startDate) &&
+    Number.isFinite(endDate)
+    ? startDate <= date && date <= endDate
     : NaN;
 }
 
-/**
-Checks if date in d is between dates in start and end.
-Returns a boolean or NaN:
- 
-  true  : if d is between start and end (inclusive)
- 
-     false : if d is before start or after end
- 
-     NaN   : if one or more of the dates is illegal.
- 
-     __NOTE__ : The code inside isFinite does an assignment (=).
-*/
-
-export function isInRange(
-  d: string | Date | number | iDateOptions,
-  start: string | Date | number | iDateOptions,
-  end: string | Date | number | iDateOptions,
-) {
-  return Number.isFinite((d = convertDate(d).valueOf())) &&
-    Number.isFinite((start = convertDate(start).valueOf())) &&
-    Number.isFinite((end = convertDate(end).valueOf()))
-    ? start <= d && d <= end
-    : NaN;
+export function AddHour(date: Date, hour: number) {
+  return date.setHours(date.getHours() + hour);
 }

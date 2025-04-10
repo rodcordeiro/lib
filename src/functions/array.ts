@@ -32,11 +32,11 @@ export function groupByFields<T>(
 ): Array<T[]> {
   /*
     params description :
-        f : function which returnf the array of fields 
+    array : array of data to group e.g. : [{...}, {...}]       
+        f : function which return the array of fields 
         e.g. :  (item) => {
             return [itemField1, itemField2];
         }
-        array : array of data to group e.g. : [{...}, {...}]       
     */
   var groups: { [key: string]: T[] } = {};
   array.forEach((o) => {
@@ -56,7 +56,7 @@ export function groupByFields<T>(
  * @param chunkSize - chunk size
  * @returns
  */
-function splitArray<T>(array: Array<T>, chunkSize: number) {
+export function splitArray<T>(array: Array<T>, chunkSize: number) {
   const chunks = Array(Math.ceil(array.length / chunkSize))
     .fill(1)
     .map((_, index) => index * chunkSize)
